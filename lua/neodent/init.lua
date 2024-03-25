@@ -21,6 +21,7 @@ M.setup = function(indent_map)
 
     local temp_pattern = {}  -- example pattern = {"*.lua", "*.txt"}
     for p in _patterns:gmatch("[^,]+") do
+      p = p:gsub("%s+", "") -- strip spaces
       table.insert(temp_pattern, string.format("*.%s", p))
     end
     table.insert(pattern, temp_pattern)
@@ -30,13 +31,13 @@ M.setup = function(indent_map)
       local cs = tostring(c)
       local vs = tostring(v)
   
-      if cs ~= "expandtab" then
+      if not string.find("expandtab,autoindent,smarttab", cs) then
         temp_command = temp_command..cs.."="..vs.." "
       else
-        if vs == 1 then
-          temp_command = temp_command..cs.."=true "
+        if v == 1 then
+          temp_command = temp_command..cs.." "
         else
-          temp_command = temp_command..cs.."=false "
+          temp_command = temp_command.."no"..cs.." "
         end
       end
     end
