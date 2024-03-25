@@ -30,7 +30,6 @@ M.setup = function(indent_map)
     for c, v in pairs(_commands) do
       local cs = tostring(c)
       local vs = tostring(v)
-  
       if not string.find("expandtab,autoindent,smarttab", cs) then
         temp_command = temp_command..cs.."="..vs.." "
       else
